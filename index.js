@@ -4,7 +4,6 @@ const { GoogleGenAI } = require('@google/genai');
 const app = express();
 app.use(express.json());
 
-// تهيئة Gemini باستخدام المفتاح السري الذي سنضعه في إعدادات المنصة لاحقاً
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 app.post('/interpret-dream', async (req, res) => {
@@ -14,7 +13,7 @@ app.post('/interpret-dream', async (req, res) => {
       return res.status(400).json({ error: 'الرجاء إدخال نص الحلم' });
     }
 
-    const response =.ai.models.generateContent({
+    const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: `أنت معبر رؤى وأحلام محترف. فسر هذا الحلم بدقة ووضوح: ${dream}`
     });
